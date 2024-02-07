@@ -25,21 +25,29 @@ export const marketSlice = createSlice({
     }
     // push the new market onto a copy of the market list
     state.marketList = state.marketList.slice();
-    state.marketList.push(newMarket); // should we return something here?
+    state.marketList.push(newMarket); // should we return something here? 
     },
     addCard: (state, action) => {
       state.marketList.map((market) => {
         if (market.marketId === action.payload) {
-          
+          market.cards++; 
+          state.totalCards++; 
+        }
+      })
+    },
+    deleteCard: (state, action) => {
+      state.marketList.map((market) => {
+        if (market.marketId === action.payload && market.cards > 0) {
+          market.cards--;
+          state.totalCards--;
         }
       })
     }
-    
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { addMarket } = marketSlice.actions
+export const { addMarket, addCard, deleteCard } = marketSlice.actions
 
 export default marketSlice.reducer
 
